@@ -64,10 +64,10 @@ track = eyetrack(:,1);                 %We then separate the times from the eye-
 [a,b] = size(track);
 
 
-%Now we move onto determining the times that are closest to the tracking
-%data
-%We determine this by finding the minimum of the absolute value of the
-%differences
+%Now we move onto determining the times that are closest to the tracking data
+
+%We determine this by finding the minimum of the absolute value of the differences
+
 
 track_index = 1;
 log_track = 1;
@@ -77,7 +77,7 @@ count = 1;
 for x = 1:a
     
     current_track = track(track_index,1);
-    difference = 3000;
+    difference = inf;      
    
     
     for y = rounded_s1_row(:,1):rounded_s1_row(:,n)

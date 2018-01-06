@@ -15,7 +15,7 @@
 % blink_right : bufferData(:,14)
 
 
-
+%*****************************Part 1: Importing the data sets********************
 format long g           %To generate numbers in regular standard form, rather than exponential
 
 %From here, we combine track files into one producing a size of around 511647 x 14 matrix with measurements as stated above
@@ -40,6 +40,7 @@ logrun = [logrun_int ; logrun3];
 
 clear logrun1 logrun2 logrun3 logrun_int;
 
+%*****************************Part 2:Separating the stimuli********************
 
 %From here until line 107, 73 is the size of the log file that is in the domain of the track file, and 74 is used as a boundary for where to stop
 %I would like to make the size of the log file more general (i.e. turn the 73's from here til 101 into a variable), but I'm not sure how
@@ -53,7 +54,9 @@ for stimuli2 = 2
     stimulus_t = logrun(:, 3:4);              %Only takes 3rd and 4th column once again, which contains the type of stimuli administered and the time stamp with it
     s2 = stimulus_t(stimulus_t == 2, :);            %Separates the second stimuli and their timestamps from the rest of the data
 end
-    
+
+%*****************************Part 3: Rounding the Log file to a Resolution for the Track file********************
+
 rounded_s1 = [s1_1(:,1), round(s1_1(:,2), 4)];      %We round the 1st stimuli's time stamps to within .1 ms due to resolution of eye-tracking software
 rounded_s2 = [s2(:,1), round(s2(:,2), 4)];      %We round the 2nd stimuli's time stamps to within .1 ms due to eye-tracking resolution
         
@@ -69,6 +72,7 @@ rounded_s1_row = time_s1_bound.';             %We rotate the column to make a ro
 [~,n] = size(rounded_s1_row);           %We determine the size of this new rotated time-stamp matrix
 
 
+%*****************************Part 4: Finding Closest Times in the Track file using Timestamps from Log file ********************
 
 %Now we move onto determining the times that are closest to the tracking data
 

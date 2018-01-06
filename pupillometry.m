@@ -14,7 +14,7 @@
 % blink_left : bufferData(:,13)
 % blink_right : bufferData(:,14)
 
-
+%******************Part 1: Importing the .txt Data sets*****************
 
 format long g           %To generate numbers in regular standard form, rather than exponential
 
@@ -40,6 +40,7 @@ logrun = [logrun_int ; logrun3];
 
 clear logrun1 logrun2 logrun3 logrun_int;
 
+%*********************Part 2: Segregating the Log file into Separate Stimuli*********************
 
 %From here until line 107, 73 is the size of the log file that is in the domain of the track file, and 74 is used as a boundary for where to stop
 %I would like to make the size of the log file more general (i.e. turn the 73's from here til 101 into a variable), but I'm not sure how
@@ -53,10 +54,14 @@ for stimuli2 = 2
     stimulus_t = logrun(:, 3:4);              %Only takes 3rd and 4th column once again, which contains the type of stimuli administered and the time stamp with it
     s2 = stimulus_t(stimulus_t == 2, :);            %Separates the second stimuli and their timestamps from the rest of the data
 end
-    
+
+%********************Part 3: Rounding the Log File Timestamps to the Resolution of the Eye-tracking Data*************
+
 rounded_s1 = [s1_1(:,1), round(s1_1(:,2), 4)];      %We round the 1st stimuli's time stamps to within .1 ms due to resolution of eye-tracking software
 rounded_s2 = [s2(:,1), round(s2(:,2), 4)];      %We round the 2nd stimuli's time stamps to within .1 ms due to eye-tracking resolution
-        
+
+%********************Part 4: Creating N x 1 Columns of Timestamps and Rotating it to make usuable 1 x N Rows**************
+
 time_s1 = rounded_s1(:,2);              %We separate the timestamps from the type of stimuli
 rounded_s1_row = time_s1.';             %We rotate the column to make a row of all the time stamps
 [m,n] = size(rounded_s1_row);           %We determine the size of this new rotated time-stamp matrix
@@ -68,7 +73,7 @@ track = eyetrack(:,1);                 %We then separate the times from the eye-
 
 %We determine this by finding the minimum of the absolute value of the differences
 
-
+%*******************Part 5: Determining the closest time to the Timestamps in the Eye-tracking file*******************
 track_index = 1;
 log_track = 1;
 mat_s1 = zeros(73,1);       %SPECIFIC, Change "73" to a different number depending on the number of non-false stimuli (either 1 or 2 on the log run file)
